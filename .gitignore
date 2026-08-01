@@ -1,13 +1,12 @@
-# macOS
-.DS_Store
-
-# Python / uv
-.venv/
-__pycache__/
-*.pyc
-*.pyo
-
-# Node / Frontend
+# Node dependencies
 node_modules/
+frontend/node_modules/
+
+# Build outputs
 dist/
+frontend/dist/
 .vite/
+
+# Environment and system files
+.env
+.DS_Store

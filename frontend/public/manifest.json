@@ -1,0 +1,15 @@
+{
+  "short_name": "HackApp",
+  "name": "Hackathon PWA App",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "theme_color": "#000000"
+}
