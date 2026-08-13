@@ -8,10 +8,14 @@
     "start": "node server.js",
     "build-frontend": "cd frontend && npm install && npm run build",
     "quick-build": "npm run build-frontend && npm start",
-    "dev-frontend": "cd frontend && npm run dev"
+    "dev-frontend": "cd frontend && npm run dev",
+    "dev": "concurrently -n backend,frontend -c blue,magenta \"npm start\" \"npm run dev-frontend\""
   },
   "dependencies": {
     "express": "^4.19.2",
     "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

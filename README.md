@@ -6,9 +6,9 @@ A high-velocity, single-port Progressive Web App (PWA) starter built with a **Un
 
 ## 🌟 Key Features
 
-- **Single-Port Architecture**: Express serves both API routes (`/api/...`) and compiled React static files on **Port 5000**, eliminating CORS issues.
+- **Single-Port Architecture**: Express serves both API routes (`/api/...`) and compiled React static files on **Port 5050**, eliminating CORS issues.
 - **Mobile-First PWA Support**: Out-of-the-box Web App Manifest (`manifest.json`) and Service Worker auto-updates via `vite-plugin-pwa`.
-- **Instant Mobile Testing**: Easily test on physical iPhones or Android devices with a single `ngrok http 5000` tunnel.
+- **Instant Mobile Testing**: Easily test on physical iPhones or Android devices with a single `ngrok http 5050` tunnel.
 - **Unified Build Scripts**: Single command (`npm run quick-build`) to install, bundle frontend assets, and launch the server.
 
 ---
@@ -23,7 +23,7 @@ testing-123/
 │
 ├── frontend/                # React Vite PWA Application
 │   ├── package.json         # React & Vite dependencies
-│   ├── vite.config.js       # Vite & PWA configuration (dev proxy to port 5000)
+│   ├── vite.config.js       # Vite & PWA configuration (dev proxy to port 5050)
 │   ├── index.html           # Main HTML mounting point
 │   ├── public/              # Static PWA assets (manifest.json, icons)
 │   └── src/                 # React UI Code
@@ -53,7 +53,7 @@ cd frontend && npm install && cd ..
 ---
 
 ### 2. Running the Unified Server (Production / Testing Mode)
-Build the frontend and start the single-port Express server on **`http://localhost:5000`**:
+Build the frontend and start the single-port Express server on **`http://localhost:5050`**:
 
 ```bash
 npm run quick-build
@@ -67,7 +67,7 @@ For rapid UI iteration with hot module replacement (HMR):
 ```bash
 npm run dev-frontend
 ```
-> *API requests to `/api/*` are automatically proxied to the Express backend on port 5000.*
+> *API requests to `/api/*` are automatically proxied to the Express backend on port 5050.*
 
 ---
 
@@ -77,7 +77,7 @@ To test the PWA on an iPhone or Android phone:
 1. Start your unified server: `npm run quick-build`
 2. In a second terminal window, run:
    ```bash
-   ngrok http 5000
+   ngrok http 5050
    ```
 3. Open the `https://...` link on your mobile phone and select **"Add to Home Screen"** to test as a native PWA!
 
