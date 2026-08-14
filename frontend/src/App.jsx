@@ -1,22 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import MapView from './components/MapView.jsx';
+import Wallet from './components/Wallet.jsx';
+import NavBar from './components/NavBar.jsx';
+import { INITIAL_VOUCHERS } from './data/vouchers.js';
 
 export default function App() {
-  const [status, setStatus] = useState('Connecting to backend...');
+  const [tab, setTab] = useState('map');
+  const [vouchers, setVouchers] = useState(INITIAL_VOUCHERS);
 
-  useEffect(() => {
-    fetch('/api/health')
-      .then((res) => res.json())
-      .then((data) => setStatus(data.message))
-      .catch((err) => setStatus('Backend connection failed: ' + err.message));
-  }, []);
+  function handleVoucherEarned(voucher) {
+    setVouchers((prev) => (prev.some((v) => v.code === voucher.code) ? prev : [...prev, voucher]));
+  }
 
   return (
-    <div style={{ fontFamily: 'sans-serif', padding: '2rem', textAlign: 'center' }}>
-      <h1>🚀 Hackathon Unified JS App</h1>
-      <p>Progressive Web App (PWA) template ready for rapid coding! testing </p>
-      <div style={{ padding: '1rem', background: '#f0f0f0', borderRadius: '8px', display: 'inline-block' }}>
-        <strong>Backend Status:</strong> {status}
+    <div className="app-shell">
+      <div className="app-content">
+        {tab === 'map' && <MapView onVoucherEarned={handleVoucherEarned} />}
+        {tab === 'wallet' && <Wallet vouchers={vouchers} />}
       </div>
+      <NavBar active={tab} onChange={setTab} />
     </div>
   );
 }

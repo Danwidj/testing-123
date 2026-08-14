@@ -22,10 +22,24 @@ The app turns sustainable choices into a rewarding game loop:
 
 ### Interfaces
 
-- **Map** — shows points of interest and what can be collected at each, plus live crowd-density and traffic indicators.
-- **Shop** — displays purchasable items and currently available vouchers.
-- **Stats page** — step counter, estimated carbon footprint offset, and an achievement tracker.
+- **Map** *(core)* — shows points of interest and what can be collected at each, plus crowd-density and traffic indicators.
+- **Wallet** *(core)* — active/earned vouchers with a scannable QR code for redemption.
+- **Stats page** *(stretch)* — step counter, estimated carbon footprint offset, and an achievement tracker.
+- **Shop** *(stretch)* — purchasable items and currently available vouchers, separate from the Wallet.
 - **Color-coded pitstops/landmarks** — visual crowd-density signal used to actively manage and disperse crowds.
+
+### Demo Scope (Hackathon MVP)
+
+Everything is faked/mocked for the demo — no real backend sensing or multiplayer infrastructure. This keeps the build achievable in the time available while telling the same story:
+
+| Feature | Demo approach |
+|---|---|
+| Crowd density / red roads | Hardcoded time-of-day lookup table, not live sensor data |
+| Geofence check-in | **Foreground** "Check In" button using `navigator.geolocation.getCurrentPosition()` — **not** background GPS tracking (unreliable/unsupported for PWAs on iOS Safari) |
+| "Pikmin" following bonus | Static copy (e.g. "12 other travelers took this route today +50 pts") — no real multi-user path tracking |
+| CO₂ savings ticker | Hardcoded estimate per route/mode, not a live routing API |
+| Voucher QR redemption | Real QR generation/scan, but pointing at mock voucher data |
+| Festivals, Shop, Stats | Out of scope for the demo — mentioned in the pitch as roadmap/future work |
 
 ---
 
@@ -41,7 +55,7 @@ After visiting the Museum, the user reopens the app to check the afternoon sched
 Navigating from the Museum to the Mangrove, the user sees three routing options, color-coded and labeled by environmental impact (red = more crowded). A live carbon comparison ticker shows estimated grams of CO₂ saved by choosing the green bicycle path over a car. The user picks the green cycling route.
 
 **Step 4 — Arrival and GPS Verification at the Mangrove**
-The user cycles to the Mangrove entrance and opens the app to check in. The app requests location permission and uses background GPS tracking to detect when the user crosses the Mangrove's geofenced boundary. Once coordinates match the destination zone, a celebratory success screen plays — a blooming virtual flower animation — and issues a digital voucher for a local café down the road.
+The user cycles to the Mangrove entrance and opens the app to check in, tapping a **"Check In"** button. The app requests location permission and reads the device's current coordinates (foreground only — no background tracking) to confirm the user is within the Mangrove's geofenced boundary. Once coordinates match the destination zone, a celebratory success screen plays — a blooming virtual flower animation — and issues a digital voucher for a local café down the road.
 
 **Step 5 — Reward Redemption at the Local Eatery**
 The user walks to the recommended local eatery and opens the "Wallet" tab, which shows the active discount voucher linked to the completed mangrove trip. They present the voucher's dynamic QR code to the cashier, who scans it to apply the discount — shifting tourist spend directly into the peripheral local economy.
@@ -54,6 +68,9 @@ The user walks to the recommended local eatery and opens the "Wallet" tab, which
 - **Mobile-First PWA Support**: Out-of-the-box Web App Manifest (`manifest.json`) and Service Worker auto-updates via `vite-plugin-pwa`.
 - **Instant Mobile Testing**: Easily test on physical iPhones or Android devices with a single `ngrok http 5050` tunnel.
 - **Unified Build Scripts**: Single command (`npm run build`) to install, bundle frontend assets, and launch the server.
+- **Map & routing, fully open-source**: [Leaflet](https://react-leaflet.js.org/) + [OpenStreetMap](https://www.openstreetmap.org/) tiles — no API key, no billing account, no Google Cloud setup. (We looked at Google Maps Platform first; ruled it out since it needs a billing account even for free-tier usage and offers no branding benefit here.)
+- **Client-side QR codes**: [`qrcode.react`](https://www.npmjs.com/package/qrcode.react) renders voucher QR codes with zero network calls.
+- **Geolocation check-in**: native `navigator.geolocation` (no library, no key) — foreground-only by design, since background GPS isn't reliably supported for PWAs on iOS Safari.
 
 ---
 
@@ -63,17 +80,27 @@ The user walks to the recommended local eatery and opens the "Wallet" tab, which
 testing-123/
 ├── package.json             # Root orchestrator (Express dependencies & build scripts)
 ├── server.js                # Express backend (API routes + static PWA server)
-├── .gitignore               # Excludes node_modules, dist, .env, and .DS_Store
+├── .gitignore                # Excludes node_modules, dist, .env, and .DS_Store
 │
 ├── frontend/                # React Vite PWA Application
-│   ├── package.json         # React & Vite dependencies
+│   ├── package.json         # React & Vite dependencies (leaflet, react-leaflet, qrcode.react)
 │   ├── vite.config.js       # Vite & PWA configuration (dev proxy to port 5050)
 │   ├── index.html           # Main HTML mounting point
 │   ├── public/              # Static PWA assets (manifest.json, icons)
-│   └── src/                 # React UI Code
-│       ├── main.jsx         # React mounting
-        ├── App.jsx          # Main application component & layout
-        └── index.css        # Base styling
+│   └── src/
+│       ├── main.jsx         # React mounting (imports Leaflet CSS)
+│       ├── App.jsx          # Tab switching (Map / Wallet) + shared voucher state
+│       ├── index.css        # App shell, map/wallet/nav-bar styling
+│       ├── components/
+│       │   ├── MapView.jsx  # Leaflet map, POI markers, route picker, Check-In button
+│       │   ├── Wallet.jsx   # Voucher list with QR codes
+│       │   └── NavBar.jsx   # Bottom tab bar
+│       ├── data/
+│       │   ├── pois.js      # Museum/Mangrove coordinates + hardcoded crowd lookup
+│       │   ├── routes.js    # Hardcoded route polylines + CO₂/distance estimates
+│       │   └── vouchers.js  # Initial mock voucher(s)
+│       └── utils/
+│           └── geo.js       # Haversine distance for the geofence check-in
 │
 └── .agents/skills/          # Custom Agent Skills (Git formatting, Plan writing, etc.)
     └── git/scripts/git-sync # Automated Git sync tool
