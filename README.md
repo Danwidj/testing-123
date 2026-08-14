@@ -22,11 +22,13 @@ The app turns sustainable choices into a rewarding game loop:
 
 ### Interfaces
 
-- **Map** *(core)* — shows points of interest and what can be collected at each, plus crowd-density and traffic indicators.
-- **Wallet** *(core)* — active/earned vouchers with a scannable QR code for redemption.
-- **Stats page** *(stretch)* — step counter, estimated carbon footprint offset, and an achievement tracker.
-- **Shop** *(stretch)* — purchasable items and currently available vouchers, separate from the Wallet.
-- **Color-coded pitstops/landmarks** — visual crowd-density signal used to actively manage and disperse crowds.
+Nav bar is 4 tabs: **Home, Map, Shop, Stats** (matches the teammate-designed wireframe — see `frontend/src/components/Home.jsx` for the Canva reference implementation).
+
+- **Home** *(core, static mock)* — landing dashboard: greeting header, "Explore Batam" hero card, search bar (non-functional), steps progress card, "Popular in Batam" destination cards. All data is hardcoded in `data/home-mock.js`; no buttons are wired up yet — visual scaffold only, matching the wireframe.
+- **Map** *(core, functional)* — points of interest with crowd-density markers, selectable color-coded routes, and a real geolocation Check-In flow.
+- **Shop** *(core, functional)* — was "Wallet" in earlier drafts, renamed to match the design. Currently shows the voucher list + QR codes; a real storefront (purchasable items) is future work.
+- **Stats** *(stretch, placeholder)* — nav tab exists and renders a "Coming soon" placeholder; no content built yet.
+- **Color-coded pitstops/landmarks** — visual crowd-density signal used to actively manage and disperse crowds (implemented on the Map tab).
 
 ### Demo Scope (Hackathon MVP)
 
@@ -39,7 +41,8 @@ Everything is faked/mocked for the demo — no real backend sensing or multiplay
 | "Pikmin" following bonus | Static copy (e.g. "12 other travelers took this route today +50 pts") — no real multi-user path tracking |
 | CO₂ savings ticker | Hardcoded estimate per route/mode, not a live routing API |
 | Voucher QR redemption | Real QR generation/scan, but pointing at mock voucher data |
-| Festivals, Shop, Stats | Out of scope for the demo — mentioned in the pitch as roadmap/future work |
+| Home screen | Static visual mock only — no real step tracking, search, or "View Map" navigation wired up yet |
+| Festivals, Stats | Out of scope for the demo — mentioned in the pitch as roadmap/future work |
 
 ---
 
@@ -58,19 +61,24 @@ Navigating from the Museum to the Mangrove, the user sees three routing options,
 The user cycles to the Mangrove entrance and opens the app to check in, tapping a **"Check In"** button. The app requests location permission and reads the device's current coordinates (foreground only — no background tracking) to confirm the user is within the Mangrove's geofenced boundary. Once coordinates match the destination zone, a celebratory success screen plays — a blooming virtual flower animation — and issues a digital voucher for a local café down the road.
 
 **Step 5 — Reward Redemption at the Local Eatery**
-The user walks to the recommended local eatery and opens the "Wallet" tab, which shows the active discount voucher linked to the completed mangrove trip. They present the voucher's dynamic QR code to the cashier, who scans it to apply the discount — shifting tourist spend directly into the peripheral local economy.
+The user walks to the recommended local eatery and opens the "Shop" tab, which shows the active discount voucher linked to the completed mangrove trip. They present the voucher's dynamic QR code to the cashier, who scans it to apply the discount — shifting tourist spend directly into the peripheral local economy.
 
 ---
 
 ## 🌟 Key Technical Features
 
-- **Single-Port Architecture**: Express serves both API routes (`/api/...`) and compiled React static files on **Port 5050**, eliminating CORS issues.
+- **Single-Port Architecture**: Express serves both API routes (`/api/...`) and compiled React static files on **Port 5050**, eliminating CORS issues. (Not port 5000 — macOS's built-in AirPlay Receiver binds 5000 by default and silently blocks the server; 5050 avoids that.)
 - **Mobile-First PWA Support**: Out-of-the-box Web App Manifest (`manifest.json`) and Service Worker auto-updates via `vite-plugin-pwa`.
 - **Instant Mobile Testing**: Easily test on physical iPhones or Android devices with a single `ngrok http 5050` tunnel.
 - **Unified Build Scripts**: Single command (`npm run build`) to install, bundle frontend assets, and launch the server.
 - **Map & routing, fully open-source**: [Leaflet](https://react-leaflet.js.org/) + [OpenStreetMap](https://www.openstreetmap.org/) tiles — no API key, no billing account, no Google Cloud setup. (We looked at Google Maps Platform first; ruled it out since it needs a billing account even for free-tier usage and offers no branding benefit here.)
 - **Client-side QR codes**: [`qrcode.react`](https://www.npmjs.com/package/qrcode.react) renders voucher QR codes with zero network calls.
 - **Geolocation check-in**: native `navigator.geolocation` (no library, no key) — foreground-only by design, since background GPS isn't reliably supported for PWAs on iOS Safari.
+- **No UI component library**: plain React + hand-written CSS (`index.css`). Framework7-React was tried and reverted — see "UI Library Decision" below before reaching for it again.
+
+### ⚠️ UI Library Decision
+
+Framework7-React was tried for the nav bar / list / card components and **caused a hard app-breaking bug**: `TypeError: Cannot read properties of undefined (reading 'once')`, thrown on every component due to a Framework7-React initialization-order issue (child component effects fire before the `<App>` wrapper finishes creating its internal core instance — a known issue reported on the Framework7 forum, not fixed by downgrading versions). We reverted to plain hand-rolled components, which work reliably. **Don't re-add `framework7`/`framework7-react`.** If a component library is wanted later, Konsta UI (Tailwind-based, purely presentational, no imperative core instance) is a safer bet than Framework7 — untested here, but architecturally shouldn't hit the same bug class.
 
 ---
 
@@ -89,16 +97,19 @@ testing-123/
 │   ├── public/              # Static PWA assets (manifest.json, icons)
 │   └── src/
 │       ├── main.jsx         # React mounting (imports Leaflet CSS)
-│       ├── App.jsx          # Tab switching (Map / Wallet) + shared voucher state
-│       ├── index.css        # App shell, map/wallet/nav-bar styling
+│       ├── App.jsx          # Tab switching (Home / Map / Shop / Stats) + shared voucher state
+│       ├── index.css        # App shell + per-screen styling (plain CSS, no UI kit — see note below)
 │       ├── components/
+│       │   ├── Home.jsx     # Static mock landing screen (matches Canva wireframe, not wired up)
 │       │   ├── MapView.jsx  # Leaflet map, POI markers, route picker, Check-In button
-│       │   ├── Wallet.jsx   # Voucher list with QR codes
-│       │   └── NavBar.jsx   # Bottom tab bar
+│       │   ├── Shop.jsx     # Voucher list with QR codes (renamed from Wallet.jsx)
+│       │   ├── Stats.jsx    # Placeholder ("Coming soon") — nav tab exists, no content yet
+│       │   └── NavBar.jsx   # Bottom tab bar (Home / Map / Shop / Stats)
 │       ├── data/
-│       │   ├── pois.js      # Museum/Mangrove coordinates + hardcoded crowd lookup
-│       │   ├── routes.js    # Hardcoded route polylines + CO₂/distance estimates
-│       │   └── vouchers.js  # Initial mock voucher(s)
+│       │   ├── pois.js       # Museum/Mangrove coordinates + hardcoded crowd lookup
+│       │   ├── routes.js     # Hardcoded route polylines + CO₂/distance estimates
+│       │   ├── vouchers.js   # Initial mock voucher(s)
+│       │   └── home-mock.js  # Hardcoded user/steps/popular-destinations data for Home
 │       └── utils/
 │           └── geo.js       # Haversine distance for the geofence check-in
 │
