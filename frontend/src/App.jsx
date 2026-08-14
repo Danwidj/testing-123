@@ -13,7 +13,7 @@ export default function App() {
   return (
     <div style={{ fontFamily: 'sans-serif', padding: '2rem', textAlign: 'center' }}>
       <h1>🚀 Hackathon Unified JS App</h1>
-      <p>Progressive Web App (PWA) template ready for rapid coding!</p>
+      <p>Progressive Web App (PWA) template ready for rapid coding! testing </p>
       <div style={{ padding: '1rem', background: '#f0f0f0', borderRadius: '8px', display: 'inline-block' }}>
         <strong>Backend Status:</strong> {status}
       </div>
