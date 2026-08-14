@@ -1,4 +1,4 @@
-import { USER, STEPS, POPULAR } from '../data/home-mock.js';
+import { USER, STEPS, POPULAR, MAP_PINS } from '../data/home-mock.js';
 
 export default function Home() {
   const stepsPct = Math.min(100, Math.round((STEPS.current / STEPS.goal) * 100));
@@ -16,11 +16,20 @@ export default function Home() {
 
       <div className="home-hero">
         <div className="home-hero-title">Explore Batam</div>
-        <div className="home-hero-art" />
+        <div className="home-hero-art">
+          {MAP_PINS.map((pin) => (
+            <div className="home-hero-pin" style={{ top: pin.top, left: pin.left }} key={pin.id}>
+              <span>{pin.icon}</span>
+            </div>
+          ))}
+        </div>
         <button className="home-hero-btn">View Map 🗺️</button>
       </div>
 
-      <div className="home-search">🔍 Search destinations</div>
+      <div className="home-search">
+        <span>🔍 Search destinations</span>
+        <span className="home-search-filter">🎚️</span>
+      </div>
 
       <div className="home-steps-card">
         <div>
