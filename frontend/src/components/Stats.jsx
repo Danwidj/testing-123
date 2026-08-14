@@ -11,7 +11,7 @@ function formatThousands(value) {
   return `${Math.round(value / 1000)}K`;
 }
 
-function StepsRing({ current, goal, pctLabel, subLabel }) {
+function StepsRing({ current, goal, pctLabel }) {
   const pct = Math.min(100, Math.round((current / goal) * 100));
   return (
     <div className="stats-ring" style={{ '--pct': pct }}>
@@ -20,7 +20,6 @@ function StepsRing({ current, goal, pctLabel, subLabel }) {
         <div className="stats-ring-sub">of {goal.toLocaleString()} steps</div>
         <div className="stats-ring-pct">{pct}%</div>
         <div className="stats-ring-pct-label">{pctLabel}</div>
-        {subLabel}
       </div>
     </div>
   );
@@ -50,7 +49,11 @@ function ActivityView({ period, onPeriodChange }) {
 
       <div className="stats-card">
         <div className="stats-card-label">{period === 'daily' ? "Today's Steps" : "This Week's Steps"}</div>
-        <StepsRing current={source.current} goal={source.goal} pctLabel="of daily goal" />
+        <StepsRing
+          current={source.current}
+          goal={source.goal}
+          pctLabel={period === 'daily' ? 'of daily goal' : 'of weekly goal'}
+        />
         <div className="stats-ring-meta">
           <div className="stats-ring-meta-item">
             <div>📍 {source.distanceKm} km</div>
