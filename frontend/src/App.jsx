@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import Home from './components/Home.jsx';
 import MapView from './components/MapView.jsx';
-import Wallet from './components/Wallet.jsx';
+import Shop from './components/Shop.jsx';
+import Stats from './components/Stats.jsx';
 import NavBar from './components/NavBar.jsx';
 import { INITIAL_VOUCHERS } from './data/vouchers.js';
 
 export default function App() {
-  const [tab, setTab] = useState('map');
+  const [tab, setTab] = useState('home');
   const [vouchers, setVouchers] = useState(INITIAL_VOUCHERS);
 
   function handleVoucherEarned(voucher) {
@@ -15,8 +17,10 @@ export default function App() {
   return (
     <div className="app-shell">
       <div className="app-content">
+        {tab === 'home' && <Home />}
         {tab === 'map' && <MapView onVoucherEarned={handleVoucherEarned} />}
-        {tab === 'wallet' && <Wallet vouchers={vouchers} />}
+        {tab === 'shop' && <Shop vouchers={vouchers} />}
+        {tab === 'stats' && <Stats />}
       </div>
       <NavBar active={tab} onChange={setTab} />
     </div>

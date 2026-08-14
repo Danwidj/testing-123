@@ -1,6 +1,8 @@
 const TABS = [
+  { id: 'home', label: 'Home', icon: '🏠' },
   { id: 'map', label: 'Map', icon: '🗺️' },
-  { id: 'wallet', label: 'Wallet', icon: '🎟️' }
+  { id: 'shop', label: 'Shop', icon: '🛍️' },
+  { id: 'stats', label: 'Stats', icon: '📊' }
 ];
 
 export default function NavBar({ active, onChange }) {
