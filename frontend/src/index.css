@@ -282,10 +282,332 @@ body {
 
 .stats-view {
   padding: 20px;
+  padding-bottom: 8px;
 }
 
-.stats-view h1 {
+.stats-switch,
+.stats-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: #f2f2f0;
+  margin-bottom: 16px;
+}
+
+.stats-switch-btn,
+.stats-toggle-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #777;
+}
+
+.stats-switch-btn.active,
+.stats-toggle-btn.active {
+  background: #2e7d32;
+  color: white;
+}
+
+.stats-card {
+  padding: 16px;
+  border-radius: 12px;
+  background: #f9f9f7;
+  border: 1px solid #e5e5e5;
+  margin-bottom: 16px;
+}
+
+.stats-card-label {
+  font-weight: 600;
   margin-bottom: 12px;
+}
+
+.stats-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.stats-card-header span:last-child {
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.stats-positive {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.stats-ring {
+  --pct: 0;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: conic-gradient(#2e7d32 calc(var(--pct) * 1%), #e6efe6 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.stats-ring-inner {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background: #f9f9f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.stats-ring-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.stats-ring-sub {
+  font-size: 0.7rem;
+  color: #777;
+}
+
+.stats-ring-pct {
+  margin-top: 4px;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.stats-ring-pct-label {
+  font-size: 0.7rem;
+  color: #777;
+}
+
+.stats-ring-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.stats-ring-meta-item span {
+  display: block;
+  font-size: 0.75rem;
+  color: #777;
+  margin-top: 2px;
+}
+
+.stats-bars {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 6px;
+  height: 100px;
+}
+
+.stats-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+}
+
+.stats-bar-track {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.stats-bar-fill {
+  width: 100%;
+  min-height: 4px;
+  border-radius: 4px 4px 0 0;
+  background: #a9d9b8;
+}
+
+.stats-bar-fill.today {
+  background: #2e7d32;
+}
+
+.stats-bar-col span {
+  font-size: 0.7rem;
+  color: #777;
+}
+
+.stats-eco-grid {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.stats-eco-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stats-eco-item span {
+  font-size: 1.3rem;
+}
+
+.stats-eco-item small {
+  color: #777;
+  font-size: 0.7rem;
+}
+
+.stats-reward-line {
+  margin-bottom: 16px;
+}
+
+.stats-reward-text {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.stats-reward-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #e0e0dc;
+  overflow: hidden;
+}
+
+.stats-reward-bar-fill {
+  height: 100%;
+  background: #2e7d32;
+}
+
+.stats-total-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.stats-total-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.stats-credit-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #e6efe6;
+  color: #2e7d32;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.stats-island-art {
+  width: 100px;
+  height: 70px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #a9d9b8, #7fb4c9);
+}
+
+.stats-goal-note {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.stats-milestones {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats-milestone {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.stats-milestone-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f2f0;
+  color: #aaa;
+  border: 2px solid #e0e0dc;
+}
+
+.stats-milestone-dot.done {
+  background: #2e7d32;
+  color: white;
+  border-color: #2e7d32;
+}
+
+.stats-milestone-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.stats-milestone-credits {
+  font-size: 0.7rem;
+  color: #777;
+}
+
+.stats-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.stats-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  border-radius: 10px;
+  background: #f2f2f0;
+  text-align: center;
+}
+
+.stats-badge-icon {
+  font-size: 1.6rem;
+}
+
+.stats-badge.locked {
+  opacity: 0.5;
+}
+
+.stats-badge-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.stats-badge-locked {
+  font-size: 0.65rem;
+  color: #777;
+}
+
+.stats-badges-note {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #777;
 }
 
 /* --- Wallet / Shop --- */
