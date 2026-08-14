@@ -27,7 +27,7 @@ Nav bar is 4 tabs: **Home, Map, Shop, Stats** (matches the teammate-designed wir
 - **Home** *(core, static mock)* — landing dashboard: greeting header, "Explore Batam" hero card, search bar (non-functional), steps progress card, "Popular in Batam" destination cards. All data is hardcoded in `data/home-mock.js`; no buttons are wired up yet — visual scaffold only, matching the wireframe.
 - **Map** *(core, functional)* — points of interest with crowd-density markers, selectable color-coded routes, and a real geolocation Check-In flow.
 - **Shop** *(core, functional)* — was "Wallet" in earlier drafts, renamed to match the design. Currently shows the voucher list + QR codes; a real storefront (purchasable items) is future work.
-- **Stats** *(stretch, placeholder)* — nav tab exists and renders a "Coming soon" placeholder; no content built yet.
+- **Stats** *(core, static mock)* — "Your Activity" (steps ring, weekly bar chart, eco impact, next-reward progress) and "Rewards & Badges" (milestone stepper, badges grid) sub-views, toggled via an in-screen segmented control. All data is hardcoded in `data/home-mock.js`; matches the Canva wireframe.
 - **Color-coded pitstops/landmarks** — visual crowd-density signal used to actively manage and disperse crowds (implemented on the Map tab).
 
 ### Demo Scope (Hackathon MVP)
@@ -42,7 +42,8 @@ Everything is faked/mocked for the demo — no real backend sensing or multiplay
 | CO₂ savings ticker | Hardcoded estimate per route/mode, not a live routing API |
 | Voucher QR redemption | Real QR generation/scan, but pointing at mock voucher data |
 | Home screen | Static visual mock only — no real step tracking, search, or "View Map" navigation wired up yet |
-| Festivals, Stats | Out of scope for the demo — mentioned in the pitch as roadmap/future work |
+| Stats screen | Static visual mock only — hardcoded steps/eco-impact/rewards data in `data/home-mock.js`, no real step tracking |
+| Festivals | Out of scope for the demo — mentioned in the pitch as roadmap/future work |
 
 ---
 
@@ -103,13 +104,13 @@ testing-123/
 │       │   ├── Home.jsx     # Static mock landing screen (matches Canva wireframe, not wired up)
 │       │   ├── MapView.jsx  # Leaflet map, POI markers, route picker, Check-In button
 │       │   ├── Shop.jsx     # Voucher list with QR codes (renamed from Wallet.jsx)
-│       │   ├── Stats.jsx    # Placeholder ("Coming soon") — nav tab exists, no content yet
+│       │   ├── Stats.jsx    # Activity + Rewards & Badges sub-views (matches Canva wireframe, in-screen toggle)
 │       │   └── NavBar.jsx   # Bottom tab bar (Home / Map / Shop / Stats)
 │       ├── data/
 │       │   ├── pois.js       # Museum/Mangrove coordinates + hardcoded crowd lookup
 │       │   ├── routes.js     # Hardcoded route polylines + CO₂/distance estimates
 │       │   ├── vouchers.js   # Initial mock voucher(s)
-│       │   └── home-mock.js  # Hardcoded user/steps/popular-destinations data for Home
+│       │   └── home-mock.js  # Hardcoded user/steps/popular-destinations data for Home, plus weekly steps/rewards/badges data for Stats
 │       └── utils/
 │           └── geo.js       # Haversine distance for the geofence check-in
 │
