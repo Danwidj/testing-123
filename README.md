@@ -109,7 +109,7 @@ testing-123/
 │       │   ├── pois.js       # Museum/Mangrove coordinates + hardcoded crowd lookup
 │       │   ├── routes.js     # Hardcoded route polylines + CO₂/distance estimates
 │       │   ├── vouchers.js   # Initial mock voucher(s)
-│       │   └── home-mock.js  # Hardcoded user/steps/popular-destinations data for Home
+│       │   └── home-mock.js  # Hardcoded user/steps/popular-destinations/map-pins data for Home
 │       └── utils/
 │           └── geo.js       # Haversine distance for the geofence check-in
 │
