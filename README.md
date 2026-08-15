@@ -26,7 +26,7 @@ Nav bar is 4 tabs: **Home, Map, Shop, Stats** (matches the teammate-designed wir
 
 - **Home** *(core, static mock)* — landing dashboard: greeting header, "Explore Batam" hero card, search bar (non-functional), steps progress card, "Popular in Batam" destination cards. All data is hardcoded in `data/home-mock.js`; no buttons are wired up yet — visual scaffold only, matching the wireframe.
 - **Map** *(core, functional)* — points of interest with crowd-density markers, selectable color-coded routes, and a real geolocation Check-In flow.
-- **Shop** *(core, functional)* — was "Wallet" in earlier drafts, renamed to match the design. Currently shows the voucher list + QR codes; a real storefront (purchasable items) is future work.
+- **Shop** *(core, functional)* — was "Wallet" in earlier drafts, renamed to match the design. A points-based Rewards Shop: browse Food/Activities/Stay voucher tiers, redeem points via a quantity-stepper modal, track holdings on "My Vouchers", and use a Food voucher by picking a nearby participating spot — which leads into the QR code redemption step (also used directly by check-in-earned vouchers).
 - **Stats** *(stretch, placeholder)* — nav tab exists and renders a "Coming soon" placeholder; no content built yet.
 - **Color-coded pitstops/landmarks** — visual crowd-density signal used to actively manage and disperse crowds (implemented on the Map tab).
 
@@ -41,6 +41,7 @@ Everything is faked/mocked for the demo — no real backend sensing or multiplay
 | "Pikmin" following bonus | Static copy (e.g. "12 other travelers took this route today +50 pts") — no real multi-user path tracking |
 | CO₂ savings ticker | Hardcoded estimate per route/mode, not a live routing API |
 | Voucher QR redemption | Real QR generation/scan, but pointing at mock voucher data |
+| Points balance / voucher tiers | Hardcoded starting balance and tier catalog in `data/vouchers.js`, not a real ledger or backend |
 | Home screen | Static visual mock only — no real step tracking, search, or "View Map" navigation wired up yet |
 | Festivals, Stats | Out of scope for the demo — mentioned in the pitch as roadmap/future work |
 
@@ -61,7 +62,7 @@ Navigating from the Museum to the Mangrove, the user sees three named routing op
 The user cycles to the Mangrove entrance and opens the app to check in, tapping a **"Check In"** button. The app requests location permission and reads the device's current coordinates (foreground only — no background tracking) to confirm the user is within the Mangrove's geofenced boundary. Once coordinates match the destination zone, a "You've arrived!" screen shows the points earned from the selected route with a Claim button, and issues a digital voucher for a local café down the road.
 
 **Step 5 — Reward Redemption at the Local Eatery**
-The user walks to the recommended local eatery and opens the "Shop" tab, which shows the active discount voucher linked to the completed mangrove trip. They present the voucher's dynamic QR code to the cashier, who scans it to apply the discount — shifting tourist spend directly into the peripheral local economy.
+The user opens the "Shop" tab, which shows the active discount voucher linked to the completed mangrove trip under "Check-in rewards" on the My Vouchers screen. They also have points to spend from walking — the Rewards Shop lets them redeem points for additional Food/Activities/Stay vouchers, tracked alongside the check-in reward. Tapping "Use" on a Food voucher surfaces nearby participating eateries; picking one — or presenting the check-in voucher directly — shows the dynamic QR code. They present it to the cashier, who scans it to apply the discount — shifting tourist spend directly into the peripheral local economy.
 
 ---
 
@@ -101,17 +102,18 @@ testing-123/
 │       ├── index.css        # App shell + per-screen styling (plain CSS, no UI kit — see note below)
 │       ├── components/
 │       │   ├── Home.jsx     # Static mock landing screen (matches Canva wireframe, not wired up)
-│       │   ├── MapView.jsx  # Leaflet map, crowd legend, POI detail card, route picker, Check-In + arrival flow
-│       │   ├── Shop.jsx     # Voucher list with QR codes (renamed from Wallet.jsx)
+│       │   ├── MapView.jsx  # Leaflet map, POI markers, route picker, Check-In button
+│       │   ├── Shop.jsx     # Rewards Shop / My Vouchers / Use Voucher / QR screens (renamed from Wallet.jsx)
 │       │   ├── Stats.jsx    # Placeholder ("Coming soon") — nav tab exists, no content yet
 │       │   └── NavBar.jsx   # Bottom tab bar (Home / Map / Shop / Stats)
 │       ├── data/
-│       │   ├── pois.js       # Museum/Mangrove/Mall coordinates, hours, ratings + hardcoded crowd lookup
-│       │   ├── routes.js     # Hardcoded route polylines + CO₂/distance/points estimates
-│       │   ├── vouchers.js   # Initial mock voucher(s)
+│       │   ├── pois.js       # Museum/Mangrove coordinates + hardcoded crowd lookup
+│       │   ├── routes.js     # Hardcoded route polylines + CO₂/distance estimates
+│       │   ├── vouchers.js   # Points balance, voucher tiers, mock "My Vouchers" holdings, food spots, check-in vouchers
 │       │   └── home-mock.js  # Hardcoded user/steps/popular-destinations data for Home
 │       └── utils/
-│           └── geo.js       # Haversine distance for the geofence check-in
+│           ├── geo.js       # Haversine distance for the geofence check-in
+│           └── rewards.js   # Pure points/redemption math used by Shop.jsx
 │
 └── .agents/skills/          # Custom Agent Skills (Git formatting, Plan writing, etc.)
     └── git/scripts/git-sync # Automated Git sync tool

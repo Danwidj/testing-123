@@ -664,18 +664,253 @@ body {
   margin-bottom: 12px;
 }
 
-/* --- Wallet / Shop --- */
+/* --- Shop --- */
 
-.wallet-view {
+.shop-view {
   padding: 20px;
+  padding-bottom: 32px;
 }
 
-.wallet-view h1 {
+.shop-view h1 {
+  font-size: 1.3rem;
+}
+
+.shop-subtitle {
+  color: #777;
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+.shop-empty {
+  color: #777;
+}
+
+.shop-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
   margin-bottom: 16px;
 }
 
-.wallet-empty {
+.shop-back {
+  border: none;
+  background: #f2f2f0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.shop-my-vouchers-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #e5e5e5;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.shop-badge {
+  background: #2e7d32;
+  color: white;
+  border-radius: 999px;
+  padding: 1px 7px;
+  font-size: 0.75rem;
+}
+
+.shop-points-card,
+.shop-current-vouchers-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  color: white;
+  margin-bottom: 20px;
+}
+
+.shop-current-vouchers-card {
+  display: block;
+}
+
+.shop-points-label,
+.shop-current-vouchers-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+
+.shop-points-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.shop-points-value span {
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.shop-points-rate {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-top: 6px;
+}
+
+.shop-points-icon,
+.shop-tier-icon {
+  font-size: 1.4rem;
+}
+
+.shop-current-vouchers-row {
+  display: flex;
+  margin-top: 10px;
+}
+
+.shop-current-vouchers-col {
+  flex: 1;
+  text-align: center;
+}
+
+.shop-current-vouchers-count {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.shop-current-vouchers-cat {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.shop-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 10px;
+  margin-top: 4px;
+}
+
+.shop-see-all {
+  font-weight: 400;
+  color: #2e7d32;
+  font-size: 0.85rem;
+}
+
+.shop-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.shop-tab {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 999px;
+  background: #f2f2f0;
+  color: #555;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.shop-tab.active {
+  background: #2e7d32;
+  color: white;
+}
+
+.shop-tier-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.shop-tier-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.shop-tier-kicker {
+  font-size: 0.65rem;
   color: #777;
+  letter-spacing: 0.03em;
+  margin: 6px 0 2px;
+}
+
+.shop-tier-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.shop-tier-points {
+  font-size: 0.8rem;
+  color: #2e7d32;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.shop-tier-note {
+  font-size: 0.75rem;
+  color: #777;
+  margin: 4px 0 10px;
+}
+
+.shop-tier-btn {
+  width: 100%;
+  padding: 9px;
+  border: none;
+  border-radius: 8px;
+  background: #2e7d32;
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.shop-tier-btn:disabled {
+  background: #e0e0dc;
+  color: #999;
+}
+
+.shop-use-btn {
+  width: auto;
+  padding: 9px 18px;
+  flex-shrink: 0;
+}
+
+.shop-info-note {
+  background: #f2f7f2;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.shop-info-note-sub {
+  font-weight: 400;
+  color: #777;
+  margin-top: 2px;
+}
+
+.shop-text-link-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  border: none;
+  background: none;
+  color: #2e7d32;
+  font-weight: 600;
+  padding: 10px;
 }
 
 .voucher-card {
@@ -689,9 +924,219 @@ body {
   margin-bottom: 12px;
 }
 
+.voucher-info {
+  flex: 1;
+  min-width: 0;
+}
+
 .voucher-info p {
   color: #555;
   margin-top: 4px;
+  font-size: 0.85rem;
+}
+
+.shop-spot-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.shop-voucher-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  margin-bottom: 18px;
+}
+
+.shop-qr-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 32px 20px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.shop-qr-label {
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.shop-qr-card svg {
+  margin: 0 auto;
+}
+
+.shop-qr-hint {
+  color: #777;
+  font-size: 0.85rem;
+  margin-top: 16px;
+}
+
+.shop-primary-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #2e7d32;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.shop-primary-btn:disabled {
+  background: #e0e0dc;
+  color: #999;
+}
+
+/* --- Shop: Redeem modal --- */
+
+.shop-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-end;
+  z-index: 20;
+}
+
+.shop-modal {
+  position: relative;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  padding: 24px 20px 20px;
+}
+
+.shop-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: none;
+  background: none;
+  font-size: 1.1rem;
+  color: #777;
+}
+
+.shop-modal-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 16px;
+}
+
+.shop-modal-kicker {
+  font-size: 0.7rem;
+  color: #777;
+  letter-spacing: 0.03em;
+}
+
+.shop-modal-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 2px 0;
+}
+
+.shop-modal-subtext {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.shop-modal-balance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f2f7f2;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+}
+
+.shop-modal-label {
+  font-size: 0.7rem;
+  color: #777;
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+
+.shop-modal-balance-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.shop-stepper-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.shop-stepper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f2f2f0;
+  border-radius: 999px;
+  padding: 6px 10px;
+  flex-shrink: 0;
+}
+
+.shop-stepper-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #2e7d32;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.shop-stepper-btn:disabled {
+  background: #cfcfcf;
+}
+
+.shop-stepper-value {
+  font-weight: 700;
+  min-width: 12px;
+  text-align: center;
+}
+
+.shop-modal-summary {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 14px;
+  margin-bottom: 18px;
+}
+
+.shop-modal-summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.shop-modal-summary-highlight {
+  color: #2e7d32;
+  font-weight: 700;
+}
+
+.shop-modal-footnote {
+  text-align: center;
+  color: #777;
+  font-size: 0.75rem;
+  margin-top: 10px;
 }
 
 /* --- Nav bar --- */
