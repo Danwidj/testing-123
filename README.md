@@ -41,6 +41,7 @@ Everything is faked/mocked for the demo — no real backend sensing or multiplay
 | "Pikmin" following bonus | Static copy (e.g. "12 other travelers took this route today +50 pts") — no real multi-user path tracking |
 | CO₂ savings ticker | Hardcoded estimate per route/mode, not a live routing API |
 | Voucher QR redemption | Real QR generation/scan, but pointing at mock voucher data |
+| Points balance / voucher tiers | Hardcoded starting balance and tier catalog in `data/vouchers.js`, not a real ledger or backend |
 | Home screen | Static visual mock only — no real step tracking, search, or "View Map" navigation wired up yet |
 | Stats screen | Static visual mock only — hardcoded steps/eco-impact/rewards data in `data/home-mock.js`, no real step tracking |
 | Festivals | Out of scope for the demo — mentioned in the pitch as roadmap/future work |
@@ -50,19 +51,19 @@ Everything is faked/mocked for the demo — no real backend sensing or multiplay
 ## 🧭 User Journey
 
 **Step 1 — Pre-Departure Decision at Accommodation**
-The user opens the PWA from their hotel room to plan their morning outing. The map shows a central **History Museum** and a peripheral **Mangrove Boardwalk**, each with a live crowd indicator: the Mangrove is red (**"High Crowd Density (Peak Hours)"**), the Museum is green (**"Low Crowd Density (Quiet Window)"**). Lower crowds mean better rewards (steps-based). The user bypasses the congested mangrove and heads to the Museum first.
+The user opens the PWA from their hotel room to plan their morning outing. The map shows a central **History Museum** and a peripheral **Mangrove Boardwalk**, each with a live crowd indicator: the Mangrove is red (**"Very crowded"**), the Museum is green (**"Not crowded"**). Lower crowds mean better rewards (steps-based). The user bypasses the congested mangrove and heads to the Museum first.
 
 **Step 2 — Traveling and Exploring the Museum**
 After visiting the Museum, the user reopens the app to check the afternoon schedule. The Mangrove marker has flipped from red to green now that morning tour buses have left. Tapping the Mangrove pop-up shows the site description, current quiet status, and an attached reward voucher for a nearby local eatery upon arrival.
 
 **Step 3 — Route Selection and Green Transit**
-Navigating from the Museum to the Mangrove, the user sees three routing options, color-coded and labeled by environmental impact (red = more crowded). A live carbon comparison ticker shows estimated grams of CO₂ saved by choosing the green bicycle path over a car. The user picks the green cycling route.
+Navigating from the Museum to the Mangrove, the user sees three named routing options — Scenic Park Route, Direct Route, and Mosque Loop — each showing time, distance, step-credit points, and a crowd-level badge, color-coded by crowd (red = more crowded). A CO₂-saved estimate is shown per route. The user picks the low-crowd Scenic Park Route for the most step credits.
 
 **Step 4 — Arrival and GPS Verification at the Mangrove**
-The user cycles to the Mangrove entrance and opens the app to check in, tapping a **"Check In"** button. The app requests location permission and reads the device's current coordinates (foreground only — no background tracking) to confirm the user is within the Mangrove's geofenced boundary. Once coordinates match the destination zone, a celebratory success screen plays — a blooming virtual flower animation — and issues a digital voucher for a local café down the road.
+The user cycles to the Mangrove entrance and opens the app to check in, tapping a **"Check In"** button. The app requests location permission and reads the device's current coordinates (foreground only — no background tracking) to confirm the user is within the Mangrove's geofenced boundary. Once coordinates match the destination zone, a "You've arrived!" screen shows the points earned from the selected route with a Claim button, and issues a digital voucher for a local café down the road.
 
 **Step 5 — Reward Redemption at the Local Eatery**
-The user walks to the recommended local eatery and opens the "Shop" tab, which shows the active discount voucher linked to the completed mangrove trip. They present the voucher's dynamic QR code to the cashier, who scans it to apply the discount — shifting tourist spend directly into the peripheral local economy.
+The user opens the "Shop" tab, which shows the active discount voucher linked to the completed mangrove trip under "Check-in rewards" on the My Vouchers screen. They also have points to spend from walking — the Rewards Shop lets them redeem points for additional Food/Activities/Stay vouchers, tracked alongside the check-in reward. Tapping "Use" on a Food voucher surfaces nearby participating eateries; picking one — or presenting the check-in voucher directly — shows the dynamic QR code. They present it to the cashier, who scans it to apply the discount — shifting tourist spend directly into the peripheral local economy.
 
 ---
 
@@ -112,7 +113,8 @@ testing-123/
 │       │   ├── vouchers.js   # Initial mock voucher(s)
 │       │   └── home-mock.js  # Hardcoded user/steps/popular-destinations data for Home, plus weekly steps/rewards/badges data for Stats
 │       └── utils/
-│           └── geo.js       # Haversine distance for the geofence check-in
+│           ├── geo.js       # Haversine distance for the geofence check-in
+│           └── rewards.js   # Pure points/redemption math used by Shop.jsx
 │
 └── .agents/skills/          # Custom Agent Skills (Git formatting, Plan writing, etc.)
     └── git/scripts/git-sync # Automated Git sync tool
