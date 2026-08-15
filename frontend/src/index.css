@@ -658,9 +658,47 @@ body {
 
 .stats-view {
   padding: 20px;
+  padding-bottom: 8px;
 }
 
-.stats-view h1 {
+.stats-switch,
+.stats-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: #f2f2f0;
+  margin-bottom: 16px;
+}
+
+.stats-switch-btn,
+.stats-toggle-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #777;
+}
+
+.stats-switch-btn.active,
+.stats-toggle-btn.active {
+  background: #2e7d32;
+  color: white;
+}
+
+.stats-card {
+  padding: 16px;
+  border-radius: 12px;
+  background: #f9f9f7;
+  border: 1px solid #e5e5e5;
+  margin-bottom: 16px;
+}
+
+.stats-card-label {
+  font-weight: 600;
   margin-bottom: 12px;
 }
 
