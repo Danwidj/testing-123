@@ -5,7 +5,9 @@ export const USER = {
 
 export const STEPS = {
   current: 8596,
-  goal: 10000
+  goal: 10000,
+  distanceKm: 6.4,
+  activeMinutes: 88
 };
 
 export const POPULAR = [
